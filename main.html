@@ -1,32 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-    <title>Run the Tests</title>
-</head>
-<body>
-    <form id="test-form" method="POST" action="/run_tests">
-        <textarea id="code-submission" name="code_submission" rows="10" cols="50"></textarea>
-        <br>
-        <input type="submit" value="Run the Tests">
-    </form>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Code testing platform">
+    <title>Code Testing</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="display-4 text-center">Code Testing</h1>
+      <form id="test-form" class="mb-5">
+        <div class="form-group">
+          <label for="code-input">Code</label>
+          <textarea id="code-input" class="form-control" placeholder="Enter code here..." rows="10"></textarea>
+        </div>
+        <button id="test-button" type="submit" class="btn btn-primary btn-block">Run Tests</button>
+      </form>
+      <div id="test-results" class="alert"></div>
+    </div>
 
-    <script>
-        const form = document.querySelector('#test-form');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const codeSubmission = document.querySelector('#code-submission').value;
-            fetch('/run_tests', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({code_submission: codeSubmission}),
-            }).then((response) => {
-                return response.json();
-            }).then((data) => {
-                console.log(data);
-            });
-        });
-    </script>
-</body>
-</html>
+    <!-- Bootstrap and jQuery dependency -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" cross
