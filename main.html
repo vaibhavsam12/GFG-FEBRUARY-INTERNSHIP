@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Run the Tests</title>
+</head>
+<body>
+    <form id="test-form" method="POST" action="/run_tests">
+        <textarea id="code-submission" name="code_submission" rows="10" cols="50"></textarea>
+        <br>
+        <input type="submit" value="Run the Tests">
+    </form>
+
+    <script>
+        const form = document.querySelector('#test-form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const codeSubmission = document.querySelector('#code-submission').value;
+            fetch('/run_tests', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({code_submission: codeSubmission}),
+            }).then((response) => {
+                return response.json();
+            }).then((data) => {
+                console.log(data);
+            });
+        });
+    </script>
+</body>
+</html>
