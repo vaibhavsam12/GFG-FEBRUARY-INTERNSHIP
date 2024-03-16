@@ -1,24 +1,130 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="description" content="Code testing platform">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Code Testing</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <style>
+      body {
+        background-color: #f5f5f5;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: auto;
+        overflow: hidden;
+        border-radius: 5px;
+        background-color: #fff;
+        margin-top: 2rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .container .header {
+        padding: 1rem;
+        border-bottom: solid 1px #ddd;
+      }
+
+      .container textarea {
+        width: 100%;
+        height: 50vh;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .container .results {
+        padding: 1rem;
+      }
+
+      .container .results .alert {
+        margin-bottom: 1rem;
+      }
+
+      .container .footer {
+        padding: 1rem;
+        text-align: right;
+      }
+
+      button {
+        padding: 10px 30px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 5px;
+        background-color: #1d3557;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #202e42;
+        transition: all 0.2s ease;
+      }
+
+      button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+
+      pre {
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      .invalid {
+        background-color: #ffbdbd;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
-      <h1 class="display-4 text-center">Code Testing</h1>
-      <form id="test-form" class="mb-5">
-        <div class="form-group">
-          <label for="code-input">Code</label>
-          <textarea id="code-input" class="form-control" placeholder="Enter code here..." rows="10"></textarea>
-        </div>
-        <button id="test-button" type="submit" class="btn btn-primary btn-block">Run Tests</button>
-      </form>
-      <div id="test-results" class="alert"></div>
+      <div class="header">
+        <h1>Code Testing</h1>
+      </div>
+      <textarea id="code-input" placeholder="Write your code here" spellcheck="false">
+      </textarea>
+      <div class="results">
+
+      </div>
+      <div class="footer">
+        <button id="run-tests-button" onclick="runTests()">Run the Tests</button>
+      </div>
     </div>
 
-    <!-- Bootstrap and jQuery dependency -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" cross
+    <script>
+      const runTests = () => {
+        const codeEl = document.getElementById("code-input");
+        const code = codeEl.value;
+
+        const test_cases = [
+          {
+            input: [1, 2],
+            output: 3,
+            message: "Expected 3, got: ",
+          },
+          {
+            input: [5, 3],
+            output: 8,
+            message: "Expected 8, got: ",
+          },
+          {
+            input: [7, 8],
+            output: 15,
+            message: "Expected 15, got: ",
+          },
+        ];
+
+        const isValidCode = function (code) {
+          try {
+            eval(code);
+          } catch (e) {
+            printResult("error", null, `Code is invalid.\n${e.message}`);
+            return false;
+          }
+
+          return true;
+        };
+
+        const runTestsAndPrintResults = (
